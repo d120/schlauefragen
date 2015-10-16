@@ -1,0 +1,5 @@
+
+RewriteEngine on
+RewriteRule ^api$ api.php
+RewriteRule ^admin$ admin.php
+

@@ -1,0 +1,12 @@
+
+#navbar li.active { border-top: 8px solid #CC7500; margin-top: -8px; }
+.navbar a.navbar-brand { color: #666; }
+.navbar-brand span { color: #aaa; }
+.navbar a.navbar-brand:hover { color: #bF5500 }
+
+.orange-stripe {
+  border-top: 8px solid #FFA500;
+}
+
+li p { margin: 5px 0 0; font-style: italic; color: #666; }
+input.anm { color: black; width: 80%; border: 0; border-bottom: 1px dashed #bbb; }
