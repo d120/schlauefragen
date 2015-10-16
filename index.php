@@ -25,8 +25,12 @@ include "header.php";
 <script src="https://static.luelistan.net/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 <script>
   $(function() {
+    var lastchange = 0;
     function loadQuestions() {
-      $.get("api.php?read=fragen", function(d) {
+      $.get("api.php?read=fragen&since="+lastchange, function(result) {
+        if (result == false) return;
+        lastchange = result.timestamp;
+        var d = result.data;
         var $f = $("#fragen").html("");
         var lastgroup;
         for(var i in d) {
@@ -39,7 +43,7 @@ include "header.php";
             }
           }
           var $item = $("<li class='list-group-item'>").html(d[i].frage).attr('data-id', d[i].id);
-          $item.prepend("<a href='#' class=' upvote'><span class='label label-default'>▲</span></a> <span class='label label-default'>"+d[i].upvotes+"</span> ");
+          $item.prepend("<a href='#' class=' upvote'><span class='label label-default'>▲</span></a> <span class='label label-primary'>"+d[i].upvotes+"</span> ");
           if (d[i].freigegeben==3 || d[i].anmerkung) {
             $item.append("<p><small>" +
                          (d[i].freigegeben==3 ? "<span class='label label-success'>Beantwortet</span> " : "") +
@@ -65,7 +69,7 @@ include "header.php";
     
     loadQuestions();
     
-    setInterval(loadQuestions,27000);
+    setInterval(loadQuestions,7000);
   });
   
 </script>

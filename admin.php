@@ -21,16 +21,19 @@ if (!isset($_SESSION["login"])) {
 if (isset($_POST["freigabe"])) {
   $id = intval($_POST["id"]);
   $c = $db->exec("UPDATE fragen SET freigegeben= ".intval($_POST["freigabe"])." WHERE id = $id");
+  touch("lastchange");
   die($c);
 }
 if (isset($_POST["anmerkung"])) {
   $id = intval($_POST["id"]);
   $c = $db->exec("UPDATE fragen SET anmerkung= ".$db->quote($_POST["anmerkung"])." WHERE id = $id");
+  touch("lastchange");
   die($c);
 }
 if (isset($_POST["delete"])) {
   $id = intval($_POST["delete"]);
   $c = $db->exec("UPDATE fragen SET freigegeben=2 WHERE id = $id");
+  touch("lastchange");
   die($c);
 }
 
@@ -52,8 +55,12 @@ include "header.php";
 <script src="https://static.luelistan.net/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 <script>
   $(function() {
+    var lastchange = 0;
     function loadQuestions() {
-      $.get("api.php?read=alle", function(d) {
+      $.get("api.php?read=alle&since="+lastchange, function(result) {
+        if (result == false) return;
+        lastchange = result.timestamp;
+        var d = result.data;
         var $f = $("#fragen").html("");
         var lastgroup=-1;
         for(var i in d) {
@@ -101,7 +108,7 @@ include "header.php";
     }
     
     loadQuestions();
-    setInterval(loadQuestions, 9000);
+    setInterval(loadQuestions, 4000);
   });
   
 </script>
