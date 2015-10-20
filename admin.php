@@ -74,7 +74,7 @@ include "header.php";
           }
           var $item = $("<li class='list-group-item'>").text(d[i].frage).attr('data-id', d[i].id);
           $item.prepend('<span class="label label-primary">'+d[i].upvotes+'</span> ');
-          $item.append('<button class="pull-right"> <button class="btn btn-xs freigabe">ok</button> <button class="btn btn-xs btn-danger delete">x</button></button><p><input class=anm placeholder=Anmerkung></p>');
+          $item.append('<span class="pull-right"> <button class="btn btn-xs freigabe">ok</button> <button class="btn btn-xs btn-danger delete">x</button></span><p><input class=anm placeholder=Anmerkung></p>');
           $f.append($item);
           if (d[i].freigegeben=="1") {
             $item.find('.freigabe').addClass('btn-primary');
