@@ -74,14 +74,14 @@ include "header.php";
           }
           var $item = $("<li class='list-group-item'>").text(d[i].frage).attr('data-id', d[i].id);
           $item.prepend('<span class="label label-primary">'+d[i].upvotes+'</span> ');
-          $item.append('<span class="pull-right"> <span class="label freigabe">ok</span> <span class="label label-danger delete">x</span></span><p><input class=anm placeholder=Anmerkung></p>');
+          $item.append('<button class="pull-right"> <button class="btn btn-xs freigabe">ok</button> <button class="btn btn-xs btn-danger delete">x</button></button><p><input class=anm placeholder=Anmerkung></p>');
           $f.append($item);
           if (d[i].freigegeben=="1") {
-            $item.find('.freigabe').addClass('label-primary');
+            $item.find('.freigabe').addClass('btn-primary');
           } else if (d[i].freigegeben=="3") {
-            $item.find('.freigabe').addClass('label-success');
+            $item.find('.freigabe').addClass('btn-success');
           } else {
-            $item.find('.freigabe').addClass('label-default');
+            $item.find('.freigabe').addClass('btn-default');
           }
           $item.find('input').val(d[i].anmerkung);
           $item.attr('freigabe', d[i].freigegeben);
