@@ -77,11 +77,11 @@ include "header.php";
           $item.append('<span class="pull-right"> <button class="btn btn-xs freigabe"></button> <button class="btn btn-xs btn-danger delete">x</button></span><p><input class=anm placeholder=Anmerkung></p>');
           $f.append($item);
           if (d[i].freigegeben=="1") {
-            $item.find('.freigabe').addClass('btn-default').html('Freigabe entziehen');
-          } else if (d[i].freigegeben=="3") {
-            $item.find('.freigabe').addClass('btn-primary').html('freigeben');
-          } else {
             $item.find('.freigabe').addClass('btn-success').html('als beantwortet markieren');
+          } else if (d[i].freigegeben=="3") {
+            $item.find('.freigabe').addClass('btn-default').html('Freigabe entziehen');
+          } else {
+            $item.find('.freigabe').addClass('btn-primary').html('freigeben');
           }
           $item.find('input').val(d[i].anmerkung);
           $item.attr('freigabe', d[i].freigegeben);
