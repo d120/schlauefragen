@@ -66,6 +66,7 @@ include "header.php";
     }
     
     $("#ask").submit(function() {
+      if ($("#question").val() === '') return;
       $.post("api.php", { question: $("#question").val() }, function(x) {
         $("#question").val("");
       });
