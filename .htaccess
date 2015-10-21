@@ -1,5 +1,7 @@
 
 RewriteEngine on
+
+RewriteBase /fragen/
 RewriteRule ^api$ api.php
 RewriteRule ^admin$ admin.php
 

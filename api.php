@@ -5,7 +5,8 @@ if (isset($_POST["question"])) {
   $frage = $db->quote($_POST["question"]);
   $ipaddr = $db->quote($_SERVER["REMOTE_ADDR"]);
   $db->query("INSERT INTO fragen (frage,upvotes,eindat,freigegeben,ipaddr) VALUES($frage,0,NOW(),0,$ipaddr)");
-  
+  touch("lastchange");
+
 } elseif (isset($_POST["upvote"])) {
   $id = intval($_POST["upvote"]);
   if ($_SESSION["hasUpvoted"][$id]) {

@@ -42,7 +42,9 @@ include "header.php";
 ?>
 <div class="container">
 <div class="row">
+<input type="checkbox" id="autoreload" checked> Auto reload
 
+<button id="reload" class="btn btn-default">Reload</button><br>
   
   <ul class="list-group" id="fragen">
   
@@ -67,29 +69,34 @@ include "header.php";
           if (lastgroup!=d[i].freigegeben) {
             lastgroup=d[i].freigegeben;
             switch(lastgroup) {
-              case "0": $f.append("<li class='list-group-item'><b>Nicht freigegeben</b></li>"); break;
-              case "1": $f.append("<li class='list-group-item'><b>Freigegeben</b></li>"); break;
-              case "3": $f.append("<li class='list-group-item'><b>Beantwortet</b></li>"); break;
+              case "0": $f.append("<li class='list-group-item'><h4><span class='glyphicon glyphicon-eye-close'></span> Nicht freigegeben</h4></li>"); break;
+              case "1": $f.append("<li class='list-group-item'><h4><span class='glyphicon glyphicon-eye-open'></span> Freigegeben</h4></li>"); break;
+              case "3": $f.append("<li class='list-group-item'><h4><span class='glyphicon glyphicon-ok'></span> Beantwortet</h4></li>"); break;
             }
           }
           var $item = $("<li class='list-group-item'>").text(d[i].frage).attr('data-id', d[i].id);
-          $item.prepend('<span class="label label-primary">'+d[i].upvotes+'</span> ');
-          $item.append('<span class="pull-right"> <button class="btn btn-xs freigabe"></button> <button class="btn btn-xs btn-danger delete">x</button></span><p><input class=anm placeholder=Anmerkung></p>');
+          $item.prepend('<b><span class="label upvotes">'+d[i].upvotes+'</span></b>\
+             <span class="pull-right"> <button class="btn btn-default btn-xs freigabe"></button> \
+             <button class="btn btn-xs btn-danger delete"><span class="glyphicon glyphicon-trash"></span></button></span>');
+          $item.append('<p class=anm>Anmerkung: <span></span></p>');
+          $item.find('.anm span').text(d[i].anmerkung);
           $f.append($item);
           if (d[i].freigegeben=="1") {
-            $item.find('.freigabe').addClass('btn-success').html('als beantwortet markieren');
+            $item.find('.freigabe').html('beantwortet'); $item.find('.upvotes').addClass('label-primary');
           } else if (d[i].freigegeben=="3") {
-            $item.find('.freigabe').addClass('btn-default').html('Freigabe entziehen');
+            $item.find('.freigabe').html('verstecken'); $item.find('.upvotes').addClass('label-success');
           } else {
-            $item.find('.freigabe').addClass('btn-primary').html('freigeben');
+            $item.find('.freigabe').html('freigeben'); $item.find('.upvotes').addClass('label-primary');
           }
-          $item.find('input').val(d[i].anmerkung);
           $item.attr('freigabe', d[i].freigegeben);
         }
         
-        $('input.anm').change(function() {
+        $('.anm').click(function() {
           var $item = $(this).closest("li");
-          $.post("admin.php", { "id": $item.attr("data-id"), "anmerkung": $item.find("input").val() });
+          var anm = $item.find(".anm span").text();
+          anm = prompt("Anmerkung", anm);
+          if (!anm) return;
+          $.post("admin.php", { "id": $item.attr("data-id"), "anmerkung": anm });
         });
         $(".delete").click(function() {
           $.post("admin.php", { "delete": $(this).closest("li").attr("data-id") }, function(x) {
@@ -103,12 +110,13 @@ include "header.php";
             loadQuestions();
           });
         });
+        if ($("#autoreload")[0].checked) setTimeout(loadQuestions,3000);
       }, "json");
       
     }
     
     loadQuestions();
-    setInterval(loadQuestions, 4000);
+    $("#reload,#autoreload").click(loadQuestions);
   });
   
 </script>
