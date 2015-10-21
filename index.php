@@ -2,22 +2,25 @@
 require "init.php";
 include "header.php";
 ?>
+    <div style="position:fixed; right: 0; top: 0; background-color: #ddd; border-bottom-left-radius: 5px; color: #44f; padding: 20px; text-align: center; font-size: 2em; font-weight: bold; z-index: 10000;">d120.de/fragen</div>
     <div class="container">
     <div class="row">
     
-    
+    <form id="ask">
       <div class="form-group">
         <label for="exampleInputEmail1">Stelle hier deine Frage</label>
         <input type="text" class="form-control" id="question" placeholder="Frage">
       </div>
       
       
-      <button type="submit" class="btn btn-primary" id="ask">Frage stellen</button>
+      <button type="submit" class="btn btn-primary">Frage stellen</button>
+    </form>
       <br><br>
       
       <ul class="list-group" id="fragen">
       </ul>
     
+<p class=text-muted>Hinweis: Die Fragen werden vor der Anzeige moderiert.</p>
     </div>
     </div>
 
@@ -29,6 +32,8 @@ include "header.php";
     function loadQuestions() {
       $.get("api.php?read=fragen&since="+lastchange, function(result) {
         if (result == false) return;
+        if (result.run) eval(result.run);
+        if (result.data == false) return;
         lastchange = result.timestamp;
         var d = result.data;
         var $f = $("#fragen").html("");
@@ -37,9 +42,8 @@ include "header.php";
           if (lastgroup!=d[i].freigegeben) {
             lastgroup=d[i].freigegeben;
             switch(lastgroup) {
-              case "0": $f.append("<li class='list-group-item'><b>Nicht freigegeben</b></li>"); break;
-              case "1": $f.append("<li class='list-group-item'><b>Freigegeben</b></li>"); break;
-              case "3": $f.append("<li class='list-group-item'><b>Beantwortet</b></li>"); break;
+              case "1": $f.append("<li class='list-group-item'><h4><span class='glyphicon glyphicon-question-sign'></span> Neue Fragen</h4></li>"); break;
+              case "3": $f.append("<li class='list-group-item'><h4><span class='glyphicon glyphicon-ok'></span> Beantwortete Fragen</h4></li>"); break;
             }
           }
           var $item = $("<li class='list-group-item'>").html(d[i].frage).attr('data-id', d[i].id);
@@ -61,7 +65,7 @@ include "header.php";
       
     }
     
-    $("#ask").click(function() {
+    $("#ask").submit(function() {
       $.post("api.php", { question: $("#question").val() }, function(x) {
         $("#question").val("");
       });
@@ -73,4 +77,6 @@ include "header.php";
   });
   
 </script>
+
+
 </body></html>

@@ -1,6 +1,6 @@
 
 #navbar li.active { border-top: 8px solid #CC7500; margin-top: -8px; }
-.navbar a.navbar-brand { color: #666; color: #CC7500;  font-weight: bold; }
+.navbar a.navbar-brand { color: #666; color: #000;  font-weight: bold; }
 __.navbar-brand span { color: #aaa; }
 .navbar a.navbar-brand:hover { color: #bF5500 }
 
