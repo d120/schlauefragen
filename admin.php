@@ -60,6 +60,7 @@ include "header.php";
     var lastchange = 0;
     function loadQuestions() {
       $.get("api.php?read=alle&since="+lastchange, function(result) {
+        if ($("#autoreload")[0].checked) setTimeout(loadQuestions,3000);
         if (result == false) return;
         lastchange = result.timestamp;
         var d = result.data;
@@ -110,7 +111,6 @@ include "header.php";
             loadQuestions();
           });
         });
-        if ($("#autoreload")[0].checked) setTimeout(loadQuestions,3000);
       }, "json");
       
     }
