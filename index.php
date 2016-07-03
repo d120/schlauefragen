@@ -1,8 +1,7 @@
 <?php
 require "init.php";
-include "header.php";
+show_header("Fragen");
 ?>
-    <div style="position:fixed; right: 0; top: 0; background-color: #ddd; border-bottom-left-radius: 5px; color: #44f; padding: 20px; text-align: center; font-size: 2em; font-weight: bold; z-index: 10000;">d120.de/fragen</div>
     <div class="container">
     <div class="row">
     
@@ -16,11 +15,12 @@ include "header.php";
       <button type="submit" class="btn btn-primary">Frage stellen</button>
     </form>
       <br><br>
+<p class=text-muted>Hinweis: Die Fragen werden vor der Anzeige moderiert.</p>
+<p class=text-muted>Hinweis 2: Die untenstehenden Antworten wurden nach <i>Bestem Wissen Und Gewissen™</i> teils mitgeschrieben, teils von Helfern auf der VV selbst gegeben - dabei kann es natürlich immer zu Missverständnissen, Fehlern und Irrtümern kommen. Für wirklich belastbare und verbindliche Aussagen lieber im Studienbüro oder bei der Fachstudienberatung nachfragen.</p>
       
       <ul class="list-group" id="fragen">
       </ul>
     
-<p class=text-muted>Hinweis: Die Fragen werden vor der Anzeige moderiert.</p>
     </div>
     </div>
 

@@ -38,7 +38,7 @@ if (isset($_POST["delete"])) {
 }
 
 
-include "header.php";
+show_header("Admin - Fragen");
 ?>
 <div class="container">
 <div class="row">

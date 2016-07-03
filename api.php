@@ -2,6 +2,7 @@
 require "init.php";
 
 if (isset($_POST["question"])) {
+  if (preg_match('/[a-z]/', $_POST['question']) != 1) return;
   $frage = $db->quote($_POST["question"]);
   $ipaddr = $db->quote($_SERVER["REMOTE_ADDR"]);
   $db->query("INSERT INTO fragen (frage,upvotes,eindat,freigegeben,ipaddr) VALUES($frage,0,NOW(),0,$ipaddr)");
